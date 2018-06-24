@@ -1,0 +1,183 @@
+Strategy:
+	Define a family of algorithms, encapsulate each one, and make them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
+	E.g. Football team changing it's strategy from "Attack" to "Defense"
+	
+	The Strategy pattern is to be used where you want to choose the algorithm to use at runtime. A good use of the Strategy pattern would be saving files in different formats, running various sorting algorithms, 
+	or file compression.
+
+Composite:
+	Create a tree-like structure with node and leaf elements. Leaf elements can have nodes of their own.
+	E.g. Organization with Departments. Departments VP's.
+	
+	This pattern should be used when you want to represent objects in a hierachical fashion, or you need objects and composites to be treated uniformly. 
+
+	Graphics frameworks are the most common use of this pattern.  The base Graphic object provides the base class for all other graphic objects, such as Line, Rectangle, which provide their own implementations of the 
+	paint()/draw() method. 
+	
+	The Composite pattern is frequently used for abstract syntax tree representations. 
+
+Abstract Factory:
+	Provide an interface for creating families of related or dependent objects without specifying their concrete classes.
+	E.g. Changing the look and feel of an application. From motif to default.
+	
+	The pattern is best utilised when your system has to create multiple families of products or you want to provide a library of products without exposing the implementation details. As you'll have noticed, a key 
+	characteristic is that the pattern will decouple the concrete classes from the client. 
+
+	An example of an Abstract Factory in use could be UI toolkits. Across Windows, Mac and Linux, UI composites such as windows, buttons and textfields are all provided in a widget API like SWT. However, the implementation 
+	of these widgets vary across platforms. You could write a platform independent client thanks to the Abstract Factory implementation. 
+
+Observer:
+	Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.
+	E.g. Notifying users when a database operation has occurred. PubSub.
+	
+	In general, you want to use this pattern to reduce coupling. If you have an object that needs to share it's state with others, without knowing who those objects are, the Observer is exactly what you need.
+
+	You'll have seen, and probably used, the Observer many times if you've done any UI programming, especially in Swing. The whole concept of listeners is based on this pattern. The event listener is the most popular, 
+	where you register an ActionListener to a UI control, such a button, and react to action events using the actionPerformed method. In this case, the ActionListener is the Observer and the button is your Subject. As the 
+	button changes state, you can react, if you choose to, in your actionPerformed method. 
+
+	The typical real world uses of the pattern all revolve around this type of event handling system. 
+
+Command:
+	Encapsulate a request as an object, thereby letting you parameterize clients with different requests, queue or log requests, and support undoable operations.
+	E.g. Support undo operations.
+	
+	The Command Pattern is useful when:
+
+		A history of requests is needed
+		You need callback functionality
+		Requests need to be handled at variant times or in variant orders
+		The invoker should be decoupled from the object handling the invocation.
+		You'll see command being used a lot when you need to have multiple undo operations, where a stack of the recently executed commands are maintained. To implement the undo, all you need to do is get the last 
+		Command in the stack and execute it's undo() method.
+
+	You'll also find Command useful for wizards, progress bars, GUI buttons and menu actions, and other transactional behaviour. 
+
+Decorator:
+	Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.
+	E.g. Use wrapper code to extend the class.
+	
+	The Decorator pattern should be used when:
+
+	Object responsibilities and behaviours should be dynamically modifiable
+	Concrete implementations should be decoupled from responsibilities and behaviours
+	As mentioned in the previous section, this can be done by subclassing. But too much subclassing is definitely a bad thing. As you add more behaviours to a base class, you will soon find yourself dealing with 
+	maintenance nightmare, as a new class is created for each possible combination. While the decorator can cause it's own issues, it does provide a better alternative to too much subclassing.
+
+Singleton:
+	Ensure a class only has one instance, and provide a global point of access to it.
+	E.g ADO DataBase connections
+	
+	When you need to ensure there's one instance of an object, available to a number of other classes, you may want to use the Singleton pattern. 
+	Singletons are used a lot where you need to provide a registry, or something like a thread pool. 
+	Logging is also another popular use of Singletons, providing one single access point to an applications log file.
+
+Template Method:
+	Define the skeleton of an algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm's structure. 
+	E.g. When an alogrithm is made up of multiple steps and you want to be able to customize those steps. Only if you have steps that are shared by various
+	implementations of the algorithm do you need to work with the template method pattern.
+	
+	The Template Method pattern is used when 
+
+		When behaviour of an algorithm can vary, you let subclasses implement the behaviour through overriding
+		You want to avoid code duplication, implementing variations of the algorithm in subclasses
+		You want to control the point that subclassing is allowed.
+		Template Method may not be an obvious choice in the beginning, but the usual sign that you should use the pattern is when you find that you have two almost identical classes working on some logic. 
+		At that stage, you should consider the power of the template method pattern to clean up your code.
+
+	As you can imagine, use of the Template Method is fairly common. You'll find it used in the Arrays class uses it for sorting. 
+	JFrame uses update() as a template method, subclasses of the JFrame use paint(Graphics g) as their hook method.
+
+Builder:
+	The client now wants to setup the number and order of steps in the algorithm. Use this pattern when you want client code to have control over the construction process, but
+	you want to end up with different kinds of objects.
+	Separate the construction of a complex object from its representation so that the same construction process can create different representations.
+	
+	This pattern is used when object creation algorithms should be decoupled from the system, and multiple representations of creation algorithms are required. 
+	This decoupling is useful as you can add new creation functionality to your system without affecting the core code. You also get control over the creation process at runtime with this approach.
+
+	An example of the pattern in the Java API would the StringBuilder append method. 
+
+=====================================================
+TODO:
+
+Factory Method
+Define an interface for creating an object, but let subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to subclasses.
+e.g. Use a factory method (not abstract factory) when you want to reuse common functionality with different components.
+You may be satisfied with it for a while, thinking that you wont want to change anything. But then you have to do a secret nightime stealth mission in the jungle, and you realise that your attachments are 
+completely inappropriate. You really need a NightVision scope, JungleComo and a GrenageLauncher secondary weapon. You will have to copy past the code from your original M16......not good extensibility.....
+Factory Method to the rescue!
+
+Main idea? Customise and swap out composing objects while keeping common functionality.
+
+An actually useful place to use it: You have just designed a really cool GUI, and it has a really complicated layout. It would be a real pain to have to layout everything again if you wanted to have 
+different widgets. So.....use a factory method to create the widgets. Then, if you change your mind (or someone else want to use your class, but use different components) you can just subclass the 
+GUI and override the factory methods.
+
+The idea behind the Factory Method pattern is that it allows for the case where a client doesn't know what concrete classes it will be required to create at runtime, but just wants to get a class that will do the job. 
+The FactoryMethod builds on the concept of a simple Factory, but lets the subclasses decide which implementation of the concrete class to use.  
+You'll see factories used in logging frameworks, and in a lot of scenarios where the client doesn't need to know about the concrete implementations. It's a good approach to encapsulation.
+
+
+Prototype
+Specify the kinds of objects to create using a prototypical instance, and create new objects by copying this prototype. 
+
+The Prototype pattern should be considered when
+
+Composition, creation and representation of objects should be decoupled from the system
+Classes to be created are specified at runtime
+You need to hide the complexity of creating new instance from the client
+Creating an object is an expensive operation and it would be more efficient to copy an object.
+Objects are required that are similar to existing objects.
+The pattern is used by the Clonable interface in Java. Cloneable is implemented as a marker interface to show what objects can be cloned, as Object already defined a protected clone() method. 
+Client can override, or call the superclass implementation, of this clone method to do the copy.
+
+Structural Patterns
+
+Adapter
+Convert the interface of a class into another interface clients expect. Adapter lets classes work together that couldn't otherwise because of incompatible interfaces.
+
+The main use of this pattern is when a class that you need to use doesn't meet the requirements of an interface. As mentioned before, adapters are common across Eclipse plug-ins. 
+For a particular object to contribute to the Properties view, adapters are used display the objects data. The view itself doesn't need to know anything about the object the it is displaying properties for. 
+
+
+Bridge
+Decouple an abstraction from its implementation so that the two can vary independently.
+
+The Bridge pattern should be used when both the class as well as what it does vary often. The bridge pattern can also be thought of as two layers of abstraction. 
+When the abstractions and implementations should not be bound at compile time, and should be independently extensible the pattern should be used. 
+
+In particular this pattern is useful in graphic toolkits that need to run on multiple platforms. You'll  see this in AWT, where a component has a component peer which does the OS specific operations. 
+Also the Collections framework has examples of the bridge interface: ArrayList and LinkedList are implement List. And List provides common methods to add, remove or check size. 
+
+Facade
+Provide a unified interface to a set of interfaces in a subsystem. Facade defines a higher-level interface that makes the subsystem easier to use.
+
+Flyweight
+Use sharing to support large numbers of fine-grained objects efficiently. 
+
+Proxy 
+Provide a surrogate or placeholder for another object to control access to it.
+
+Behavioral Patterns
+
+Chain of Responsibility 
+Avoid coupling the sender of a request to its receiver by giving more than one object a chance to handle the request. Chain the receiving objects and pass the request along the chain until an object handles it.
+
+Interpreter 
+Given a language, define a represention for its grammar along with an interpreter that uses the representation to interpret sentences in the language.
+
+Iterator 
+Provide a way to access the elements of an aggregate object sequentially without exposing its underlying representation. 
+
+Mediator 
+Define an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from referring to each other explicitly, and it lets you vary their interaction independently. 
+
+Memento 
+Without violating encapsulation, capture and externalize an object's internal state so that the object can be restored to this state later.
+
+State 
+Allow an object to alter its behavior when its internal state changes. The object will appear to change its class. 
+
+Visitor 
+Represent an operation to be performed on the elements of an object structure. Visitor lets you define a new operation without changing the classes of the elements on which it operates. 
